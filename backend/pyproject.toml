@@ -38,7 +38,10 @@ dependencies = [
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
+    "pytest-mock>=3.14.0",
     "pipreqs>=0.5.0",
+    # langchain-core is needed to test message conversion helpers
+    "langchain-core>=1.2.5",
 ]
 ollama = [
     "langchain-ollama>=1.0.0",
@@ -57,7 +60,13 @@ build-backend = "hatchling.build"
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
+    "pytest-mock>=3.14.0",
+    "langchain-core>=1.2.5",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
 
 [tool.hatch.build.targets.wheel]
 packages = ["app"]

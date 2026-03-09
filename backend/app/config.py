@@ -27,7 +27,9 @@ class Config:
     # JSON配置 - 禁用ASCII转义，让中文直接显示（而不是 \uXXXX 格式）
     JSON_AS_ASCII = False
     
-    # LLM配置（统一使用OpenAI格式）
+    # LLM配置
+    # LLM_PROVIDER: 'openai'（兼容OpenAI格式）| 'ollama'（本地）| 'gemini'（Google）
+    LLM_PROVIDER = os.environ.get('LLM_PROVIDER', 'openai').lower()
     LLM_API_KEY = os.environ.get('LLM_API_KEY')
     LLM_BASE_URL = os.environ.get('LLM_BASE_URL', 'https://api.openai.com/v1')
     LLM_MODEL_NAME = os.environ.get('LLM_MODEL_NAME', 'gpt-4o-mini')
@@ -67,7 +69,14 @@ class Config:
     def validate(cls):
         """验证必要配置"""
         errors = []
-        if not cls.LLM_API_KEY:
+        valid_providers = ('openai', 'ollama', 'gemini')
+        if cls.LLM_PROVIDER not in valid_providers:
+            errors.append(
+                f"LLM_PROVIDER 值无效: '{cls.LLM_PROVIDER}'，"
+                f"请设置为 {' / '.join(valid_providers)} 之一"
+            )
+        # Ollama 本地运行，无需 API Key；OpenAI 和 Gemini 需要 API Key
+        if cls.LLM_PROVIDER in ('openai', 'gemini') and not cls.LLM_API_KEY:
             errors.append("LLM_API_KEY 未配置")
         if not cls.ZEP_API_KEY:
             errors.append("ZEP_API_KEY 未配置")

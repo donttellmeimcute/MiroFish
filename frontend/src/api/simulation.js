@@ -179,9 +179,8 @@ export const interviewAgents = (data) => {
 /**
  * Get the historical simulation list with project details
  * Used for the home page history display
- * @param {number} limit - Return count限制
+ * @param {number} limit - Return count limit
  */
 export const getSimulationHistory = (limit = 20) => {
   return service.get('/api/simulation/history', { params: { limit } })
 }
-

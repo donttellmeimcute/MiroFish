@@ -157,7 +157,7 @@
         
         <div class="card-content">
           <p class="api-note">POST /api/simulation/create</p>
-          <p class="description">图谱构建Completed，请进入下一步进行模拟环境搭建</p>
+          <p class="description">Graph build complete. Proceed to the next step to set up the simulation environment.</p>
           <button 
             class="action-btn" 
             :disabled="currentPhase < 2 || creatingSimulation"

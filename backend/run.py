@@ -30,7 +30,7 @@ def main():
         print("Configuration errors:")
         for err in errors:
             print(f"  - {err}")
-        print("\n请检查 .env 文件中的配置")
+        print("\nPlease check the configuration in the .env file")
         sys.exit(1)
     
     # Create the app
@@ -47,4 +47,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

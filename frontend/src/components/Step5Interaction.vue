@@ -721,7 +721,7 @@ const sendToAgent = async (message) => {
       .slice(-6)
       .map(msg => `${msg.role === 'user' ? 'Interviewer' : 'You'}: ${msg.content}`)
       .join('\n')
-    prompt = `以下是我们之前的对话：\n${historyContext}\n\n现在我的新问题是：${message}`
+    prompt = `Here is our previous conversation:\n${historyContext}\n\nMy new question is: ${message}`
   }
   
   const res = await interviewAgents({
@@ -761,7 +761,7 @@ const sendToAgent = async (message) => {
         content: responseContent,
         timestamp: new Date().toISOString()
       })
-      addLog(`${selectedAgent.value.username} 已回复`)
+      addLog(`${selectedAgent.value.username} replied`)
     } else {
       throw new Error('No response data')
     }
@@ -803,7 +803,7 @@ const submitSurvey = async () => {
   if (selectedAgents.value.size === 0 || !surveyQuestion.value.trim()) return
   
   isSurveying.value = true
-  addLog(`Send Survey给 ${selectedAgents.value.size} 个对象...`)
+  addLog(`Sending survey to ${selectedAgents.value.size} targets...`)
   
   try {
     const interviews = Array.from(selectedAgents.value).map(idx => ({
@@ -857,12 +857,12 @@ const submitSurvey = async () => {
       }
       
       surveyResults.value = surveyResultsList
-      addLog(`收到 ${surveyResults.value.length} responses`)
+      addLog(`Received ${surveyResults.value.length} responses`)
     } else {
       throw new Error(res.error || 'Request failed')
     }
   } catch (err) {
-    addLog(`问卷Send failed: ${err.message}`)
+    addLog(`Survey send failed: ${err.message}`)
   } finally {
     isSurveying.value = false
   }
